@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  es01:
+    image: elasticsearch:2.3.5
+    command: "elasticsearch --node.name=es01 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - es_net
+  es02:
+    image: elasticsearch:2.3.5
+    command: "elasticsearch --node.name=es02 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    networks:
+      - es_net
+  es03:
+    image: elasticsearch:2.3.5
+    command: "elasticsearch --node.name=es03 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+    networks:
+      - es_net
+  kibana:
+    image: kibana:4.5.4
+    ports:
+      - "5601:5601"
+    networks:
+      - es_net
+    environment:
+      - ELASTICSEARCH_URL=http://es01:9200
+networks:
+  es_net:
+    driver: bridge
