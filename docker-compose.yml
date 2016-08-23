@@ -9,6 +9,8 @@ services:
       - "9300:9300"
     networks:
       - es_net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
   es02:
     build: elasticsearch
     command: "elasticsearch --node.name=es02 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
@@ -17,6 +19,8 @@ services:
       - "9301:9300"
     networks:
       - es_net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
   es03:
     build: elasticsearch
     command: "elasticsearch --node.name=es03 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
@@ -25,6 +29,8 @@ services:
       - "9302:9300"
     networks:
       - es_net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
   kibana:
     build: kibana
     ports:
@@ -33,6 +39,8 @@ services:
       - es_net
     environment:
       - ELASTICSEARCH_URL=http://es01:9200
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
 networks:
   es_net:
     driver: bridge
