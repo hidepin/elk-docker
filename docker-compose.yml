@@ -3,7 +3,7 @@ version: '2'
 services:
   es01:
     build: elasticsearch
-    command: "elasticsearch --node.name=es01 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
+    command: "elasticsearch -E node.name=es01 -E discovery.zen.ping.unicast.hosts=es01,es02,es03"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -11,9 +11,11 @@ services:
       - es_net
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
   es02:
     build: elasticsearch
-    command: "elasticsearch --node.name=es02 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
+    command: "elasticsearch -E node.name=es02 -E discovery.zen.ping.unicast.hosts=es01,es02,es03"
     ports:
       - "9201:9200"
       - "9301:9300"
@@ -21,9 +23,11 @@ services:
       - es_net
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
   es03:
     build: elasticsearch
-    command: "elasticsearch --node.name=es03 --discovery.zen.ping.unicast.hosts=es01,es02,es03"
+    command: "elasticsearch -E node.name=es03 -E discovery.zen.ping.unicast.hosts=es01,es02,es03"
     ports:
       - "9202:9200"
       - "9302:9300"
@@ -31,6 +35,8 @@ services:
       - es_net
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
   kibana:
     build: kibana
     ports:

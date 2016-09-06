@@ -1,8 +1,7 @@
-FROM kibana:4.5.4
+FROM kibana:5.0.0
 MAINTAINER Hidetoshi Imai <hidepin@gmail.com>
 
-RUN gosu kibana kibana plugin --install elasticsearch/marvel/latest && \
-    gosu kibana kibana plugin --install elastic/sense && \
-    gosu kibana kibana plugin --install elastic/timelion
+RUN kibana-plugin install x-pack && \
+    kibana-plugin install timelion
 
 CMD ["kibana"]

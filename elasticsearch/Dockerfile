@@ -1,9 +1,7 @@
-FROM elasticsearch:2.3.5
+FROM elasticsearch:5.0.0
 MAINTAINER Hidetoshi Imai <hidepin@gmail.com>
 
-RUN gosu elasticsearch plugin install analysis-kuromoji && \
-    gosu elasticsearch plugin install mobz/elasticsearch-head && \
-    gosu elasticsearch plugin install license && \
-    gosu elasticsearch plugin install marvel-agent
+RUN elasticsearch-plugin install x-pack && \
+    elasticsearch-plugin install analysis-kuromoji
 
 CMD ["elasticsearch"]
